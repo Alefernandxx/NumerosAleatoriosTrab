@@ -1,0 +1,31 @@
+1. Visão geral (20 s)
+"Implementei uma lista simplesmente encadeada em C com alocação dinâmica. O programa gera 1000 números aleatórios de 0 a 1000, insere todos de forma ordenada, calcula estatísticas, imprime em matriz 50 por 20 e no final libera toda a memória."
+
+2. Estruturas (30 s)
+"Uso duas structs. O No guarda um inteiro e um ponteiro para o próximo nó. A Lista guarda o ponteiro para o primeiro nó e a quantidade de elementos, que eu atualizo a cada inserção ou remoção. Assim não preciso percorrer a lista para saber o tamanho."
+
+3. Função para comentar: inserirOrdenado (60 s)
+"Ela tem três casos:
+
+Se a lista está vazia ou o valor é menor ou igual ao primeiro, chamo inserirInicio.
+Senão, percorro com um ponteiro aux enquanto o próximo nó tiver valor menor ou igual ao que quero inserir. Uso <= para que os duplicados sejam mantidos.
+Se aux chegou ao último nó, chamo inserirFim. Caso contrário, insiro no meio: o novo nó aponta para aux->prox e depois aux->prox aponta para o novo. A ordem desses dois passos importa, porque se eu inverter perco o resto da lista."
+
+4. Remoção (30 s)
+"No removerFim preciso parar no penúltimo nó, porque em uma lista simplesmente encadeada não dá para voltar. Dou free no último e ponho NULL no prox do penúltimo. Trato à parte o caso de um único elemento. O removerValor remove a primeira ocorrência e devolve 0 se o valor não existe."
+
+5. Estatísticas e exibição (20 s)
+"Percorro a lista para calcular menor, maior, média e desvio padrão. Como a lista é ordenada, os iguais ficam juntos, então conto os duplicados em uma única passada. A impressão usa dois for aninhados, 50 linhas por 20 colunas, avançando o ponteiro a cada elemento."
+
+6. Memória (15 s)
+"No final, liberarLista guarda o prox antes de dar free em cada nó, para não perder o resto da lista, e zera a lista. Assim não há vazamento de memória."
+
+Demonstração (opcional): "No main também insiro os valores -1, 5000 e 2000 e depois os removo, só para mostrar que todas as funções funcionam sem alterar a lista final."
+
+Perguntas que o professor pode fazer
+Por que <= e não < no inserirOrdenado? Para manter os duplicados. Com <= o novo valor entra depois dos iguais.
+Qual a complexidade da inserção ordenada? O(n) no pior caso, porque precisa percorrer a lista.
+Por que removerFim é O(n)? Não há ponteiro para o último nó nem para o anterior, então é preciso percorrer até o penúltimo.
+O que acontece se eu der free antes de guardar o prox? Perde-se o acesso ao resto da lista, e usar o ponteiro depois do free é comportamento indefinido.
+Por que -lm na compilação? Por causa do sqrt da biblioteca math.h, usado no desvio padrão.
+Por que a Lista tem o campo qtd? Para saber o tamanho em O(1) e usar no cálculo da média.
